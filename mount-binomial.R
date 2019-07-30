@@ -194,4 +194,30 @@ simhist <- ggplot(df2, aes(x = simnum)) +
 simhist
 
 # Number of 'players' doing trials until they succeed
-sum(trials)
+sum(trials) # Output: 7978
+
+
+
+# using rgeom() for players as base unit rather than runs
+g <- rgeom(100000, 0.008)
+mean(g)
+median(g)
+table(g)
+
+gNum <- c(as.numeric(g))
+df <- data.frame("gNum" = gNum)
+
+simhist <- ggplot(df, aes(x = gNum)) + 
+  geom_histogram(binwidth = 1,
+                 alpha = 0.60,
+                 #color = "dark red",
+                 aes(fill = ..count..)) + 
+  scale_fill_gradient("Frequency", low = "blue", high = "red") + 
+  labs(title = "Histogram of Number of Trials to First Success",
+       subtitle = "Based on 100,000 simulations",
+       x = "Trials Required",
+       y = "Frequency") + 
+  theme_partywhale()
+simhist
+
+sum(g)
